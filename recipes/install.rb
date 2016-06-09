@@ -1,7 +1,6 @@
+package 'tmux'
 
-package 'libcgroup' do
- action :install
-end
+package 'libcgroup'
 
 service 'cgconfig' do
   action [:enable, :start]

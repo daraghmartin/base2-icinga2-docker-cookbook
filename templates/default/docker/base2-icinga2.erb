@@ -1,1 +1,7 @@
 FROM icinga/icinga2
+
+
+#icinga2 daemon --validate
+#supervisorctl restart icinga2
+RUN yum install -y perl-libwww-perl perl-Crypt-SSLeay perl-Sys-Syslog
+RUN cd /etc/icinga2/conf.d && wget https://raw.githubusercontent.com/mdcollins05/PagerDuty-Icinga2/master/pagerduty-icinga2.conf
