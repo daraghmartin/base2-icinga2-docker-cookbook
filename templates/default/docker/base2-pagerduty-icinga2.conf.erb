@@ -1,0 +1,65 @@
+object User "pagerduty" {
+  pager = <%= node["base2"]["icinga2"]["pagerduty"]["api_key"] %>
+  groups = [ "icingaadmins" ]
+  display_name = "Surefire"
+  states = [ OK, Warning, Critical, Unknown, Up, Down ]
+  types = [ Problem, Acknowledgement, Recovery ]
+}
+
+object NotificationCommand "notify-service-by-base2-pagerduty" {
+  import "plugin-notification-command"
+  command = "/usr/local/bin/base2icinga2pagerduty.rb"
+
+  env = {
+    "ICINGA_CONTACTPAGER" = "$user.pager$"
+    "ICINGA_NOTIFICATIONTYPE" = "$notification.type$"
+    "ICINGA_SERVICENAME" = "$service.name$"
+    "ICINGA_HOST" = "$host.name$"
+    "ICINGA_HOSTALIAS" = "$host.display_name$"
+    "ICINGA_STATE" = "$service.state$"
+    "ICINGA_OUTPUT" = "$service.output$"
+    "ICINGA_ORIGIN_TYPE" = "service"
+    "ICINGA_CLIENT" = "$user.display_name$"
+  }
+}
+
+object NotificationCommand "notify-host-by-base2-pagerduty" {
+  import "plugin-notification-command"
+  command = "/usr/local/bin/base2icinga2pagerduty.rb"
+
+  env = {
+    "ICINGA_CONTACTPAGER" = "$user.pager$"
+    "ICINGA_NOTIFICATIONTYPE" = "$notification.type$"
+    "ICINGA_HOST" = "$host.name$"
+    "ICINGA_HOSTALIAS" = "$host.display_name$"
+    "ICINGA_STATE" = "$host.state$"
+    "ICINGA_OUTPUT" = "$host.output$"
+    "ICINGA_ORIGIN_TYPE" = "host"
+    "ICINGA_CLIENT" = "$user.display_name$"
+  }
+}
+
+apply Notification "base2-pagerduty-service" to Service {
+  command = "notify-service-by-base2-pagerduty"
+  states = [ OK, Warning, Critical, Unknown ]
+  types = [ Problem, Acknowledgement, Recovery ]
+  period = "24x7"
+  users = [ "pagerduty" ]
+
+  interval = 0 // disable re-notification - This means only 1 notification is sent to PagerDuty per Incident
+
+  assign where service.vars.enable_base2_pagerduty == true
+}
+
+
+apply Notification "pagerduty-host" to Host {
+  command = "notify-host-by-base2-pagerduty"
+  states = [ Up, Down ]
+  types = [ Problem, Acknowledgement, Recovery ]
+  period = "24x7"
+  users = [ "pagerduty" ]
+
+  interval = 0 // disable re-notification - This means only 1 notification is sent to PagerDuty per Incident
+
+  assign where host.vars.enable_base2_pagerduty == true
+}

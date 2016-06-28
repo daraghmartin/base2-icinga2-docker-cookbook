@@ -1,0 +1,38 @@
+object Host "www.base2services.com" {
+  import "generic-host"
+  address = "www.base2services.com"
+  check_command = "http"
+  vars.ping = "false"
+  vars.enable_base2_pagerduty = true
+}
+
+object Service "ahl production site" {
+  max_check_attempts = 1
+  check_interval = 1m
+  retry_interval = 30s
+  host_name     = "www.base2services.com"
+  import "generic-service",
+  check_command = "http",
+  vars.http_ssl = true
+  vars.http_vhost = "www.base2services.com"
+  vars.http_warn_time = "2s"
+  vars.http_critical_time = "5s"
+  vars.http_expect = "404"
+  vars.http_sni = true
+  vars.enable_base2_pagerduty = true
+}
+
+# object CheckCommand "custom-check-endpoints" {
+#   import "plugin-check-command"
+#   command = [ "/usr/local/bin/custom_check.rb" ]
+# }
+#
+# object Service "custom-check-endpoints" {
+#   display_name = "Check Custom Endpoints"
+#   host_name = "www.base2services.com"
+#   check_command = "custom-check-endpoints"
+#   vars.enable_base2_pagerduty = true
+#   check_interval = 2m
+#   retry_interval = 2m
+#
+# }
