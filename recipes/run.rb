@@ -29,7 +29,7 @@ docker_container 'base2-icinga2' do
     "ENVIRONMENT=#{node.chef_environment}"
   ]
   detach true
-  binds node["base2"]["icinga2"]["container"]["binds"]
+  binds binds
   port '80:80'
   restart_policy 'always'
   action [:redeploy]
