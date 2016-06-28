@@ -7,18 +7,13 @@
 # /var/lib/mysql
 binds = []
 dirs = []
+volumes = []
 
-node["base2"]["icinga2"]["container"]["binds"].map { |k,v| dirs << k; binds << "#{k}:#{v}"}
+node["base2"]["icinga2"]["container"]["binds"].map { |k,v| dirs << k; volumes << v; binds << "#{k}:#{v}"}
 
 dirs.each do | dir |
   directory dir do
     recursive true
-  end
-end
-
-if node["base2"]["icinga2"]["check_base2"]
-  template "/data/opt/base2/icinga2/conf.d/check_base2.conf" do
-    source 'docker/check_base2.conf.erb'
   end
 end
 
@@ -32,6 +27,7 @@ docker_container 'base2-icinga2' do
   binds binds
   port '80:80'
   restart_policy 'always'
+  volumes volumes
   action [:redeploy]
 end
 
