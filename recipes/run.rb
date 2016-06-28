@@ -16,7 +16,7 @@ dirs.each do | dir |
   end
 end
 
-if ["base2"]["icinga2"]["check_base2"]
+if node["base2"]["icinga2"]["check_base2"]
   template "/data/opt/base2/icinga2/conf.d/check_base2.conf" do
     source 'docker/check_base2.conf.erb'
   end
