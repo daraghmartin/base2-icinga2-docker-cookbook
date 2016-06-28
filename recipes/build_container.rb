@@ -18,10 +18,6 @@ template "/usr/src/icinga2/base2icinga2pagerduty.rb" do
   source 'docker/base2icinga2pagerduty.rb.erb'
 end
 
-template "/usr/src/icinga2/check_base2.conf" do
-  source 'docker/check_base2.conf.erb'
-end
-
 template "/usr/src/icinga2/include_extra.conf" do
   source 'docker/include_extra.conf.erb'
 end
