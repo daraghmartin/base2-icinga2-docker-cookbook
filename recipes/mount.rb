@@ -10,3 +10,8 @@ lvm_volume_group 'vg_nfs' do
     mount_point location: '/data', options: 'noatime,nodiratime'
   end
 end
+
+#restart docker
+service 'docker' do
+  action [:restart]
+end

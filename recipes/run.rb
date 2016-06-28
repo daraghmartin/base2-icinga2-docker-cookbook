@@ -5,7 +5,7 @@
 # /usr/share/icingaweb2
 #
 # /var/lib/mysql
-['/data/icinga2/conf.d/local', '/data/mysql/'].each do | dir |
+node["base2"]["icinga2"]["container"]["bind_dirs"].each do | dir |
   directory dir do
     recursive true
   end
@@ -13,12 +13,12 @@ end
 
 docker_container 'base2-icinga2' do
   container_name 'base2-icinga2'
-  tag 'v0.1.0'
+  tag node["base2"]["icinga2"]["container"]["tag"]
   env [
     "ENVIRONMENT=#{node.chef_environment}"
   ]
   detach true
-  binds ['/data/icinga2/conf.d/local:/etc/icinga2/conf.d/local', '/data/mysql:/var/lib/mysql']
+  binds node["base2"]["icinga2"]["container"]["binds"]
   port '80:80'
   restart_policy 'always'
   action [:redeploy]

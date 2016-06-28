@@ -23,7 +23,7 @@ template "/usr/src/icinga2/check_base2.conf" do
 end
 
 docker_image 'base2-icinga2' do
-  tag 'v0.1.0'
+  tag node["base2"]["icinga2"]["container"]["tag"]
   source '/usr/src/icinga2'
   action :build_if_missing
 end
