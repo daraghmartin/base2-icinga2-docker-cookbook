@@ -17,17 +17,22 @@ dirs.each do | dir |
   end
 end
 
+if node["base2"]["icinga2"]["check_base2"]
+  template "/data/opt/icinga2/extra/check_base2.conf" do
+    source 'docker/check_base2.conf.erb'
+  end
+end
+
 docker_container 'base2-icinga2' do
   container_name 'base2-icinga2'
   tag node["base2"]["icinga2"]["container"]["tag"]
   env [
     "ENVIRONMENT=#{node.chef_environment}"
   ]
-  detach true
   binds binds
+  detach true
   port '80:80'
   restart_policy 'always'
-  volumes volumes
   action [:redeploy]
 end
 

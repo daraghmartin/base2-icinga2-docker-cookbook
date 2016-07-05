@@ -22,10 +22,6 @@ template "/usr/src/icinga2/include_extra.conf" do
   source 'docker/include_extra.conf.erb'
 end
 
-template "/usr/src/icinga2/check_base2.conf" do
-  source 'docker/check_base2.conf.erb'
-end
-
 docker_image 'base2-icinga2' do
   tag node["base2"]["icinga2"]["container"]["tag"]
   source '/usr/src/icinga2'
