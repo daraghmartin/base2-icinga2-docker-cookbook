@@ -6,7 +6,7 @@ object Host "www.base2services.com" {
   vars.enable_base2_pagerduty = true
 }
 
-object Service "ahl production site" {
+object Service "base2 production site" {
   max_check_attempts = 1
   check_interval = 1m
   retry_interval = 30s
@@ -17,7 +17,7 @@ object Service "ahl production site" {
   vars.http_vhost = "www.base2services.com"
   vars.http_warn_time = "2s"
   vars.http_critical_time = "5s"
-  vars.http_expect = "404"
+  vars.http_expect = "200"
   vars.http_sni = true
   vars.enable_base2_pagerduty = true
 }
