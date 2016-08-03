@@ -1,7 +1,7 @@
 object User "pagerduty" {
   pager = "<%= node["base2"]["icinga2"]["pagerduty"]["api_key"] %>"
   groups = [ "icingaadmins" ]
-  display_name = "Surefire"
+  display_name = "<%= node["base2"]["icinga2"]["org"] %>"
   states = [ OK, Warning, Critical, Unknown, Up, Down ]
   types = [ Problem, Acknowledgement, Recovery ]
 }
