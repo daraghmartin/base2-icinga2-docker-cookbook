@@ -2,8 +2,10 @@ package 'tmux'
 
 package 'libcgroup'
 
-service 'cgconfig' do
-  action [:enable, :start]
+unless node['base2']['environment']['platform'] == 'azure'
+  service 'cgconfig' do
+    action [:enable, :start]
+  end
 end
 
 package "docker"
