@@ -5,7 +5,7 @@ FROM icinga/icinga2
 #supervisorctl restart icinga2
 #RUN yum install -y perl-libwww-perl perl-Crypt-SSLeay perl-Sys-Syslog
 #RUN cd /etc/icinga2/conf.d && wget https://raw.githubusercontent.com/mdcollins05/PagerDuty-Icinga2/master/pagerduty-icinga2.conf
-RUN yum install -y ruby; mkdir -p /opt/icinga2/extra
+RUN yum install -y ruby nagios-plugins-nrpe; mkdir -p /opt/icinga2/extra
 
 
 COPY services.conf /etc/icinga2/conf.d/services.conf
