@@ -17,4 +17,5 @@ COPY base2-pagerduty-icinga2.conf /etc/icinga2/conf.d/base2-pagerduty-icinga2.co
 COPY base2icinga2pagerduty.rb /usr/local/bin/base2icinga2pagerduty.rb
 COPY include_extra.conf /etc/icinga2/conf.d/include_extra.conf
 
+COPY extra /opt/icinga2/extra
 RUN chmod a+x /usr/local/bin/base2icinga2pagerduty.rb

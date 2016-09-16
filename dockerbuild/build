@@ -1,0 +1,10 @@
+#git clone https://github.com/daraghmartin/base2-icinga2-docker-cookbook.git
+cd base2-icinga2-docker-cookbook/
+cd dockerbuild
+
+export PAGER=xoxxoxoxoxx
+export DISPLAY_NAME=jdjjdjdjddjdjd
+
+sed -i "s/SED_THIS_DISPLAY_NAME/$DISPLAY_NAME/" base2-pagerduty-icinga2.conf
+
+mdkir extra
